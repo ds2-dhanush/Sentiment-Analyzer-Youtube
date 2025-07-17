@@ -1,8 +1,0 @@
-streamlit
-pandas
-numpy
-textblob
-nltk
-matplotlib
-wordcloud
-google-api-python-client
