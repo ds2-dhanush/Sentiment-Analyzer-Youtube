@@ -98,14 +98,13 @@ st.title("📺 Social‑Buzz Sentiment Analyzer")
 st.markdown("Paste any *YouTube video URL*, choose how many comments to analyse, and see the crowd's mood in seconds.")
 
 with st.sidebar:
-    st.sidebar.info("🔓 Default demo key will be used unless you provide your own. For heavy use, use your own key.")
-    st.header("🔑 API Key & Settings")
-    use_own = st.checkbox("🔐 Use my own API key")
-    if use_own:
-        api_key = st.text_input("Enter your YouTube API Key", type="password")
-    else:
-        # 👇restricted API key
-        api_key = "AIzaSyDxO80tz2nhBLOoGC5PmBCJ5aSeRQOMIFM"
+    st.sidebar.info("🔐 API key is securely loaded from Streamlit Secrets.")
+    st.header("🔧 Settings")
+    try:
+        api_key = st.secrets["YOUTUBE_API_KEY"]
+    except KeyError:
+        st.error("❌ Missing YOUTUBE_API_KEY in Streamlit secrets.")
+        st.stop()
 
     max_comments = st.slider("Number of comments", 50, 1000, 200, 50)
 
