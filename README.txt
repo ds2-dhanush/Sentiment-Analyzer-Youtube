@@ -40,9 +40,6 @@ Then, the app processes and analyzes those comments to reveal the general sentim
 --------------------------
 Use this key in the left sidebar of the app:
 
-👉 API KEY:  
-AIzaSyDx08tz2nhBLO0GCSPmBCJ5aSeRQ0MlFM
-
 📌 Paste it in the “YouTube API Key” section on the left sidebar of the app.
 
 📌 If this key fails due to limit, generate your own from:
