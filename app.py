@@ -1,3 +1,4 @@
+
 import os
 import re
 from collections import Counter
@@ -22,7 +23,7 @@ except LookupError:
     after_download = True
 
 # ---------------------------------------------------------------------
-# 🛠 Helpers
+# 🛠 Helpers
 # ---------------------------------------------------------------------
 
 def get_api_client(api_key: str):
@@ -64,7 +65,7 @@ def fetch_comments(video_id: str, api_key: str, max_comments: int = 200) -> pd.D
 
 
 # ---------------------------------------------------------------------
-# 🧹 Text cleaning & sentiment
+# 🧹 Text cleaning & sentiment
 # ---------------------------------------------------------------------
 
 def clean_text(text: str) -> str:
@@ -88,25 +89,29 @@ def top_keywords(df: pd.DataFrame, sentiment: str, n: int = 15):
     return Counter(meaningful).most_common(n)
 
 # ---------------------------------------------------------------------
-# 🎨 Streamlit UI
+# 🎨 Streamlit UI
 # ---------------------------------------------------------------------
 
 st.set_page_config(page_title="YouTube Sentiment Analyzer", layout="wide")
 
-st.title("📺 Social‑Buzz Sentiment Analyzer")
-st.markdown("Paste any *YouTube video URL*, choose how many comments to analyse, and see the crowd\'s mood in seconds.")
+st.title("📺 Social‑Buzz Sentiment Analyzer")
+st.markdown("Paste any *YouTube video URL*, choose how many comments to analyse, and see the crowd's mood in seconds.")
 
 with st.sidebar:
-    st.sidebar.info("📌 Copy your API key from the README.txt file and paste it below.")
-    st.header("🔑 API Key & Settings")
-    api_key = st.text_input("YouTube API Key", type="password", value=os.getenv("YOUTUBE_API_KEY", ""))
-    max_comments = st.slider("Number of comments", 50, 1000, 200, 50)
-    if not api_key:
-        st.warning("Please enter a valid YouTube Data API v3 key in the sidebar.")
+    st.sidebar.info("🔓 Default demo key will be used unless you provide your own. For heavy use, use your own key.")
+    st.header("🔑 API Key & Settings")
+    use_own = st.checkbox("🔐 Use my own API key")
+    if use_own:
+        api_key = st.text_input("Enter your YouTube API Key", type="password")
+    else:
+        # 👇restricted API key
+        api_key = "AIzaSyDxO80tz2nhBLOoGC5PmBCJ5aSeRQOMIFM"
 
-video_url = st.text_input("🎞️ YouTube Video URL", placeholder="https://www.youtube.com/watch?v=...")
+    max_comments = st.slider("Number of comments", 50, 1000, 200, 50)
 
-if st.button("Analyze Sentiment"):
+video_url = st.text_input("🎞️ YouTube Video URL", placeholder="https://www.youtube.com/watch?v=...")
+
+if st.button("Analyze Sentiment"):
     if not (api_key and video_url):
         st.error("⚠️ Enter both an API key and a YouTube video URL.")
     else:
